@@ -76,11 +76,9 @@ with app.app_context():
 #Ruta raiz
 @app.route('/')
 def index():
-    #retornar los alumnos
-    #return 'Hola Mundo'
-
     juegos = Juego.query.all()
-    return render_template('index.html', juegos=juegos)
+    generos = sorted(set(j.genero for j in juegos if j.genero), key=str.lower)
+    return render_template('index.html', juegos=juegos, todos_generos=generos, genero_filtro=None)
 
 #Ruta /juegos crear un nuevo juego
 @app.route('/juegos/new', methods=['GET','POST'])
@@ -140,6 +138,13 @@ def update_juego(no_serie):
 @app.route('/juegos')
 def getJuegos():
     return 'Aqui van los juegos'
+
+#Ruta para filtrar por género
+@app.route('/genero/<string:genero>')
+def por_genero(genero):
+    juegos = Juego.query.filter_by(genero=genero).all()
+    generos = sorted(set(j.genero for j in Juego.query.all() if j.genero), key=str.lower)
+    return render_template('index.html', juegos=juegos, genero_filtro=genero, todos_generos=generos)
 
 
 if __name__ == '__main__':
