@@ -11,14 +11,13 @@
     <title>{% block title %}{% endblock %}</title>
     <style>
         :root {
-            --neon-cyan: #30e3ff;
-            --neon-green: #3cff9b;
-            --neon-violet: #8a5cff;
-            --bg-dark: #07111f;
-            --surface: rgba(10, 20, 38, 0.92);
-            --surface-soft: rgba(14, 28, 50, 0.88);
-            --text-main: #eef6ff;
-            --text-soft: #9fb3cc;
+            --matrix-green: #00ff66;
+            --matrix-green-soft: rgba(0, 255, 102, 0.18);
+            --matrix-dark: #030806;
+            --matrix-panel: rgba(6, 18, 10, 0.92);
+            --matrix-panel-soft: rgba(8, 26, 15, 0.9);
+            --text-main: #e9fff0;
+            --text-soft: #9ed7ae;
         }
 
         body {
@@ -26,27 +25,29 @@
             min-height: 100vh;
             color: var(--text-main);
             background:
-                radial-gradient(circle at 15% 18%, rgba(48, 227, 255, 0.18), transparent 22%),
-                radial-gradient(circle at 85% 12%, rgba(60, 255, 155, 0.16), transparent 20%),
-                radial-gradient(circle at 70% 80%, rgba(138, 92, 255, 0.18), transparent 24%),
-                linear-gradient(140deg, #050a12 0%, var(--bg-dark) 45%, #0d1730 100%);
+                linear-gradient(rgba(0, 255, 102, 0.06) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 102, 0.06) 1px, transparent 1px),
+                radial-gradient(circle at 15% 18%, rgba(0, 255, 102, 0.2), transparent 18%),
+                radial-gradient(circle at 80% 14%, rgba(0, 255, 102, 0.12), transparent 20%),
+                linear-gradient(140deg, #020403 0%, var(--matrix-dark) 40%, #06130a 100%);
+            background-size: 34px 34px, 34px 34px, auto, auto, auto;
         }
 
         .page-shell {
             max-width: 1050px;
             margin: 2rem auto;
-            background: linear-gradient(180deg, rgba(8, 18, 34, 0.96), rgba(11, 23, 42, 0.96));
+            background: linear-gradient(180deg, rgba(6, 18, 10, 0.96), rgba(5, 14, 8, 0.96));
             border-radius: 24px;
-            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.52), 0 0 0 1px rgba(0, 255, 102, 0.08);
+            border: 1px solid rgba(0, 255, 102, 0.14);
             overflow: hidden;
         }
 
         .hero-banner {
             position: relative;
             background:
-                linear-gradient(120deg, rgba(48, 227, 255, 0.14), rgba(138, 92, 255, 0.18)),
-                linear-gradient(120deg, #0b1020, #12213f);
+                linear-gradient(120deg, rgba(0, 255, 102, 0.12), rgba(0, 255, 102, 0.02)),
+                linear-gradient(120deg, #031009, #07190e);
             color: #fff;
             padding: 2rem;
             overflow: hidden;
@@ -75,10 +76,11 @@
             letter-spacing: 0.4px;
             margin-bottom: 0.35rem;
             text-transform: uppercase;
+            text-shadow: 0 0 12px rgba(0, 255, 102, 0.35);
         }
 
         .hero-banner .subtitle {
-            color: rgba(238, 246, 255, 0.82);
+            color: rgba(233, 255, 240, 0.86);
             margin-bottom: 0;
         }
 
@@ -88,15 +90,15 @@
         }
 
         .is-brand {
-            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-violet));
-            color: #08111d;
+            background: linear-gradient(135deg, var(--matrix-green), #91ffb6);
+            color: #041008;
             border: none;
             font-weight: 700;
-            box-shadow: 0 10px 24px rgba(48, 227, 255, 0.22);
+            box-shadow: 0 10px 24px rgba(0, 255, 102, 0.24);
         }
 
         .is-brand:hover {
-            color: #08111d;
+            color: #041008;
             filter: brightness(1.05);
         }
 
@@ -106,9 +108,9 @@
         .input,
         .textarea,
         .select select {
-            background-color: var(--surface-soft);
+            background-color: var(--matrix-panel-soft);
             color: var(--text-main);
-            border-color: rgba(255, 255, 255, 0.08);
+            border-color: rgba(0, 255, 102, 0.12);
         }
 
         .label,
@@ -127,33 +129,74 @@
         }
 
         .box {
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(0, 255, 102, 0.1);
             box-shadow: 0 14px 32px rgba(0, 0, 0, 0.24);
         }
 
         .game-card,
         .poster-frame {
-            background: linear-gradient(180deg, rgba(16, 30, 54, 0.98), rgba(10, 20, 38, 0.98));
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: linear-gradient(180deg, rgba(8, 28, 14, 0.98), rgba(4, 14, 8, 0.98));
+            border: 1px solid rgba(0, 255, 102, 0.12);
             box-shadow: 0 14px 32px rgba(0, 0, 0, 0.28);
         }
 
         .tag.is-neon {
-            background: rgba(48, 227, 255, 0.16);
-            color: var(--neon-cyan);
-            border: 1px solid rgba(48, 227, 255, 0.22);
+            background: rgba(0, 255, 102, 0.14);
+            color: var(--matrix-green);
+            border: 1px solid rgba(0, 255, 102, 0.22);
         }
 
         .tag.is-neon-green {
-            background: rgba(60, 255, 155, 0.14);
-            color: var(--neon-green);
-            border: 1px solid rgba(60, 255, 155, 0.22);
+            background: rgba(0, 255, 102, 0.1);
+            color: #92ffb9;
+            border: 1px solid rgba(0, 255, 102, 0.18);
         }
 
         .tag.is-violet {
-            background: rgba(138, 92, 255, 0.16);
-            color: #d6c7ff;
-            border: 1px solid rgba(138, 92, 255, 0.22);
+            background: rgba(0, 255, 102, 0.08);
+            color: #caffdc;
+            border: 1px solid rgba(0, 255, 102, 0.16);
+        }
+
+        .flash-stack {
+            margin: 1rem 0 0;
+        }
+
+        .flash-box {
+            border: 1px solid rgba(0, 255, 102, 0.18);
+            background: rgba(2, 14, 7, 0.95);
+            color: var(--text-main);
+            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.2);
+        }
+
+        .matrix-nav {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+            align-items: center;
+        }
+
+        .matrix-nav a,
+        .matrix-nav span {
+            color: var(--text-main);
+            text-decoration: none;
+        }
+
+        .matrix-chip {
+            border: 1px solid rgba(0, 255, 102, 0.16);
+            background: rgba(0, 255, 102, 0.08);
+            border-radius: 999px;
+            padding: 0.55rem 0.8rem;
+        }
+
+        .matrix-chip:hover {
+            background: rgba(0, 255, 102, 0.14);
+        }
+
+        .matrix-chip.is-active {
+            background: rgba(0, 255, 102, 0.22);
+            box-shadow: 0 0 0 1px rgba(0, 255, 102, 0.22) inset;
         }
 
         .fade-up {
@@ -200,9 +243,34 @@
     <section class="section pt-5">
         <div class="page-shell">
             <header class="hero-banner fade-up">
-                <h1 class="title is-2"><i class="fa-solid fa-gamepad mr-2"></i> Catálogo de Videojuegos</h1>
-                <p class="subtitle is-5"><i class="fa-solid fa-bolt mr-2"></i> Venta y renta de juegos</p>
+                <div class="is-flex is-justify-content-space-between is-align-items-start is-flex-wrap-wrap gap-3">
+                    <div>
+                        <h1 class="title is-2"><i class="fa-solid fa-gamepad mr-2"></i> Catálogo de Videojuegos</h1>
+                        <p class="subtitle is-5"><i class="fa-solid fa-bolt mr-2"></i> Venta y renta de juegos</p>
+                    </div>
+                    <nav class="matrix-nav">
+                        <a class="matrix-chip" href="{{ url_for('index') }}">Juegos</a>
+                        <a class="matrix-chip" href="{{ url_for('registro_usuarios') }}">Registro</a>
+                        <a class="matrix-chip" href="{{ url_for('inicio_sesion') }}">Login</a>
+                        {% if usuario %}
+                        <a class="matrix-chip is-active" href="{{ url_for('cerrar_sesion') }}">Salir</a>
+                        {% endif %}
+                    </nav>
+                </div>
             </header>
+            <div class="content-area pt-0">
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                <div class="flash-stack">
+                    {% for category, message in messages %}
+                    <article class="message flash-box {% if category == 'success' %}is-success{% elif category == 'danger' %}is-danger{% endif %}">
+                        <div class="message-body">{{ message }}</div>
+                    </article>
+                    {% endfor %}
+                </div>
+                {% endif %}
+                {% endwith %}
+            </div>
             <main class="content-area">
             {% block content %}{% endblock %}
             </main>

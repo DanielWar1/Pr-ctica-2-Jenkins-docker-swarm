@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %}Inicio de Sesión{% endblock %}
+{% block content %}
+<div class="columns is-centered">
+    <div class="column is-8-tablet is-5-desktop fade-up stagger-2">
+        <div class="box">
+            <h3 class="title is-4 mb-2"><i class="fa-solid fa-right-to-bracket mr-2"></i> Inicio de sesión</h3>
+            <p class="has-text-grey-lighter mb-5">Ingresa con tu correo y contraseña para entrar al sistema.</p>
+            <form action="{{ url_for('inicio_sesion') }}" method="POST">
+                <div class="field">
+                    <label class="label" for="correo">Correo</label>
+                    <div class="control">
+                        <input class="input" type="email" id="correo" name="correo" required>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label" for="contrasena">Contraseña</label>
+                    <div class="control">
+                        <input class="input" type="password" id="contrasena" name="contrasena" required>
+                    </div>
+                </div>
+
+                <div class="buttons mt-5">
+                    <button type="submit" class="button is-brand">
+                        <span class="icon"><i class="fa-solid fa-unlock-keyhole"></i></span>
+                        <span>Entrar</span>
+                    </button>
+                    <a href="{{ url_for('registro_usuarios') }}" class="button is-light">
+                        <span class="icon"><i class="fa-solid fa-user-plus"></i></span>
+                        <span>Crear cuenta</span>
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
