@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% block title %}Agregar Juego{% endblock %}
+{% block content %}
+<div class="columns is-centered">
+    <div class="column is-9-tablet is-7-desktop fade-up stagger-2">
+        <div class="box">
+            <h3 class="title is-4 mb-2"><i class="fa-solid fa-gamepad mr-2"></i> Agregar juego</h3>
+            <p class="has-text-grey-lighter mb-5">Captura la ficha y sube una portada desde tu computadora.</p>
+            <form action="{{ url_for('create_juego') }}" method="POST" enctype="multipart/form-data">
+                <div class="field">
+                    <label class="label" for="no_serie">No. Serie</label>
+                    <div class="control">
+                        <input class="input" type="text" id="no_serie" name="no_serie" placeholder="Ej. GC-001" required>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label" for="nombre">Nombre</label>
+                    <div class="control">
+                        <input class="input" type="text" id="nombre" name="nombre" placeholder="Nombre del videojuego" required>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label" for="genero">Género</label>
+                    <div class="control">
+                        <input class="input" type="text" id="genero" name="genero" placeholder="Acción, RPG, Carreras..." required>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label" for="pg">PG</label>
+                    <div class="control">
+                        <input class="input" type="text" id="pg" name="pg" placeholder="Ej. 13+" required>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label" for="anio_salida">Año de salida</label>
+                    <div class="control">
+                        <input class="input" type="number" id="anio_salida" name="anio_salida" min="1950" max="2100" required>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label" for="imagen">Portada</label>
+                    <div class="control">
+                        <input class="input" type="file" id="imagen" name="imagen" accept="image/*">
+                    </div>
+                </div>
+
+                <div class="buttons mt-5">
+                    <button type="submit" class="button is-brand">
+                        <span class="icon"><i class="fa-solid fa-floppy-disk"></i></span>
+                        <span>Guardar</span>
+                    </button>
+                    <a href="{{ url_for('index') }}" class="button is-light">
+                        <span class="icon"><i class="fa-solid fa-ban"></i></span>
+                        <span>Cancelar</span>
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

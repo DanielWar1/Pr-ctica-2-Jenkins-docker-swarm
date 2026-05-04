@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW0Hq0WQYkN4MEnsyV4A7zK0uXDd2uV0QX5fVxv0Q9A/Q==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <title>{% block title %}{% endblock %}</title>
+    <style>
+        :root {
+            --neon-cyan: #30e3ff;
+            --neon-green: #3cff9b;
+            --neon-violet: #8a5cff;
+            --bg-dark: #07111f;
+            --surface: rgba(10, 20, 38, 0.92);
+            --surface-soft: rgba(14, 28, 50, 0.88);
+            --text-main: #eef6ff;
+            --text-soft: #9fb3cc;
+        }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            min-height: 100vh;
+            color: var(--text-main);
+            background:
+                radial-gradient(circle at 15% 18%, rgba(48, 227, 255, 0.18), transparent 22%),
+                radial-gradient(circle at 85% 12%, rgba(60, 255, 155, 0.16), transparent 20%),
+                radial-gradient(circle at 70% 80%, rgba(138, 92, 255, 0.18), transparent 24%),
+                linear-gradient(140deg, #050a12 0%, var(--bg-dark) 45%, #0d1730 100%);
+        }
+
+        .page-shell {
+            max-width: 1050px;
+            margin: 2rem auto;
+            background: linear-gradient(180deg, rgba(8, 18, 34, 0.96), rgba(11, 23, 42, 0.96));
+            border-radius: 24px;
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            overflow: hidden;
+        }
+
+        .hero-banner {
+            position: relative;
+            background:
+                linear-gradient(120deg, rgba(48, 227, 255, 0.14), rgba(138, 92, 255, 0.18)),
+                linear-gradient(120deg, #0b1020, #12213f);
+            color: #fff;
+            padding: 2rem;
+            overflow: hidden;
+        }
+
+        .hero-banner::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+            background-size: 28px 28px;
+            mask-image: linear-gradient(180deg, rgba(0,0,0,0.7), transparent);
+            pointer-events: none;
+        }
+
+        .hero-banner > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-banner .title {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            letter-spacing: 0.4px;
+            margin-bottom: 0.35rem;
+            text-transform: uppercase;
+        }
+
+        .hero-banner .subtitle {
+            color: rgba(238, 246, 255, 0.82);
+            margin-bottom: 0;
+        }
+
+        .content-area {
+            padding: 1.75rem;
+            color: var(--text-main);
+        }
+
+        .is-brand {
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-violet));
+            color: #08111d;
+            border: none;
+            font-weight: 700;
+            box-shadow: 0 10px 24px rgba(48, 227, 255, 0.22);
+        }
+
+        .is-brand:hover {
+            color: #08111d;
+            filter: brightness(1.05);
+        }
+
+        .box,
+        .card,
+        .table,
+        .input,
+        .textarea,
+        .select select {
+            background-color: var(--surface-soft);
+            color: var(--text-main);
+            border-color: rgba(255, 255, 255, 0.08);
+        }
+
+        .label,
+        .title,
+        .subtitle,
+        .help,
+        .table th,
+        .table td,
+        .tag,
+        .content {
+            color: var(--text-main);
+        }
+
+        .input::placeholder {
+            color: rgba(238, 246, 255, 0.45);
+        }
+
+        .box {
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 14px 32px rgba(0, 0, 0, 0.24);
+        }
+
+        .game-card,
+        .poster-frame {
+            background: linear-gradient(180deg, rgba(16, 30, 54, 0.98), rgba(10, 20, 38, 0.98));
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 14px 32px rgba(0, 0, 0, 0.28);
+        }
+
+        .tag.is-neon {
+            background: rgba(48, 227, 255, 0.16);
+            color: var(--neon-cyan);
+            border: 1px solid rgba(48, 227, 255, 0.22);
+        }
+
+        .tag.is-neon-green {
+            background: rgba(60, 255, 155, 0.14);
+            color: var(--neon-green);
+            border: 1px solid rgba(60, 255, 155, 0.22);
+        }
+
+        .tag.is-violet {
+            background: rgba(138, 92, 255, 0.16);
+            color: #d6c7ff;
+            border: 1px solid rgba(138, 92, 255, 0.22);
+        }
+
+        .fade-up {
+            opacity: 0;
+            transform: translateY(12px);
+            animation: fadeUp 0.55s ease forwards;
+        }
+
+        .stagger-1 { animation-delay: 0.08s; }
+        .stagger-2 { animation-delay: 0.16s; }
+        .stagger-3 { animation-delay: 0.24s; }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .fade-up {
+                animation: none;
+                opacity: 1;
+                transform: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-banner {
+                padding: 1.35rem;
+            }
+
+            .content-area {
+                padding: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <section class="section pt-5">
+        <div class="page-shell">
+            <header class="hero-banner fade-up">
+                <h1 class="title is-2"><i class="fa-solid fa-gamepad mr-2"></i> Catálogo de Videojuegos</h1>
+                <p class="subtitle is-5"><i class="fa-solid fa-bolt mr-2"></i> Administra tus juegos, portadas y fichas técnicas</p>
+            </header>
+            <main class="content-area">
+            {% block content %}{% endblock %}
+            </main>
+        </div>
+    </section>
+</body>
+</html>

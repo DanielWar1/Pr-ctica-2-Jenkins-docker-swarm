@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% block title %}Actualizar Juego{% endblock %}
+{% block content %}
+<div class="columns is-centered">
+    <div class="column is-9-tablet is-7-desktop fade-up stagger-2">
+        <div class="box">
+                <h3 class="title is-4 mb-2"><i class="fa-solid fa-pen-to-square mr-2"></i> Actualizar juego</h3>
+                <p class="has-text-grey-lighter mb-5">Edita los datos del título y cambia la portada si lo necesitas.</p>
+                <form action="{{ url_for('update_juego', no_serie=juego.no_serie) }}" method="POST" enctype="multipart/form-data">
+                    <div class="field">
+                        <label class="label" for="no_serie">No. Serie</label>
+                        <div class="control">
+                            <input class="input" type="text" id="no_serie" name="no_serie" value="{{ juego.no_serie }}" disabled>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label" for="nombre">Nombre</label>
+                        <div class="control">
+                            <input class="input" type="text" id="nombre" name="nombre" value="{{ juego.nombre }}" required>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label" for="genero">Género</label>
+                        <div class="control">
+                            <input class="input" type="text" id="genero" name="genero" value="{{ juego.genero }}" required>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label" for="pg">PG</label>
+                        <div class="control">
+                            <input class="input" type="text" id="pg" name="pg" value="{{ juego.pg }}" required>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label" for="anio_salida">Año de salida</label>
+                        <div class="control">
+                            <input class="input" type="number" id="anio_salida" name="anio_salida" value="{{ juego.anio_salida }}" min="1950" max="2100" required>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Portada actual</label>
+                        <div class="poster-frame p-3 has-text-centered mb-4" style="border-radius: 16px;">
+                            {% if juego.imagen %}
+                            <img src="{{ url_for('static', filename='uploads/' ~ juego.imagen) }}" alt="{{ juego.nombre }}" style="max-height: 260px; width: auto; object-fit: cover; border-radius: 14px;">
+                            {% else %}
+                            <p class="has-text-grey-lighter">No hay portada cargada.</p>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label" for="imagen">Cambiar portada</label>
+                        <div class="control">
+                            <input class="input" type="file" id="imagen" name="imagen" accept="image/*">
+                        </div>
+                    </div>
+
+                    <div class="buttons mt-5">
+                        <button type="submit" class="button is-brand">
+                            <span class="icon"><i class="fa-solid fa-rotate"></i></span>
+                            <span>Actualizar</span>
+                        </button>
+                        <a href="{{ url_for('index') }}" class="button is-light">
+                            <span class="icon"><i class="fa-solid fa-ban"></i></span>
+                            <span>Cancelar</span>
+                        </a>
+                    </div>
+                </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
