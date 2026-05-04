@@ -1,9 +1,10 @@
 import os
 import uuid
-from flask import Flask, request, render_template, redirect, url_for
+from flask import Flask, request, render_template, redirect, url_for, session, flash
 from flask_sqlalchemy import SQLAlchemy
 from dotenv import load_dotenv
 from werkzeug.utils import secure_filename
+from werkzeug.security import generate_password_hash, check_password_hash
 
 
 load_dotenv()
@@ -11,6 +12,7 @@ load_dotenv()
 
 #crear instancia
 app =  Flask(__name__)
+app.secret_key = os.getenv('SECRET_KEY', 'matrix-secret-key')
 
 
 database_url = os.getenv('DATABASE_URL')
@@ -46,6 +48,21 @@ class Juego(db.Model):
         }
 
 
+class Usuario(db.Model):
+    __tablename__ = 'usuarios'
+    id = db.Column(db.Integer, primary_key=True)
+    nombre = db.Column(db.String(120), nullable=False)
+    edad = db.Column(db.Integer, nullable=False)
+    correo = db.Column(db.String(120), unique=True, nullable=False)
+    password_hash = db.Column(db.String(255), nullable=False)
+
+    def set_password(self, password):
+        self.password_hash = generate_password_hash(password)
+
+    def check_password(self, password):
+        return check_password_hash(self.password_hash, password)
+
+
 def guardar_imagen(archivo_imagen):
     if not archivo_imagen or not archivo_imagen.filename:
         return None
@@ -69,6 +86,13 @@ def eliminar_imagen(nombre_archivo):
         os.remove(ruta_archivo)
 
 
+def current_user():
+    user_id = session.get('user_id')
+    if not user_id:
+        return None
+    return Usuario.query.get(user_id)
+
+
 with app.app_context():
     db.create_all()
 
@@ -78,7 +102,7 @@ with app.app_context():
 def index():
     juegos = Juego.query.all()
     generos = sorted(set(j.genero for j in juegos if j.genero), key=str.lower)
-    return render_template('index.html', juegos=juegos, todos_generos=generos, genero_filtro=None)
+    return render_template('index.html', juegos=juegos, todos_generos=generos, genero_filtro=None, usuario=current_user())
 
 #Ruta /juegos crear un nuevo juego
 @app.route('/juegos/new', methods=['GET','POST'])
@@ -99,7 +123,7 @@ def create_juego():
         return redirect(url_for('index'))
     
     #Aqui sigue si es GET
-    return render_template('create_juegos.html')
+    return render_template('create_juegos.html', usuario=current_user())
 
 
 #Eliminar juego
@@ -132,7 +156,7 @@ def update_juego(no_serie):
 
         db.session.commit()
         return redirect(url_for('index'))
-    return render_template('update_juegos.html', juego=juego)
+    return render_template('update_juegos.html', juego=juego, usuario=current_user())
 
 #Ruta /juegos
 @app.route('/juegos')
@@ -144,7 +168,57 @@ def getJuegos():
 def por_genero(genero):
     juegos = Juego.query.filter_by(genero=genero).all()
     generos = sorted(set(j.genero for j in Juego.query.all() if j.genero), key=str.lower)
-    return render_template('index.html', juegos=juegos, genero_filtro=genero, todos_generos=generos)
+    return render_template('index.html', juegos=juegos, genero_filtro=genero, todos_generos=generos, usuario=current_user())
+
+
+@app.route('/usuarios/registro', methods=['GET', 'POST'])
+def registro_usuarios():
+    if request.method == 'POST':
+        nombre = request.form['nombre'].strip()
+        edad = int(request.form['edad'])
+        correo = request.form['correo'].strip().lower()
+        contrasena = request.form['contrasena']
+
+        usuario_existente = Usuario.query.filter_by(correo=correo).first()
+        if usuario_existente:
+            flash('Ese correo ya está registrado.', 'danger')
+            return redirect(url_for('registro_usuarios'))
+
+        nuevo_usuario = Usuario(nombre=nombre, edad=edad, correo=correo)
+        nuevo_usuario.set_password(contrasena)
+        db.session.add(nuevo_usuario)
+        db.session.commit()
+        flash('Usuario registrado correctamente. Ahora inicia sesión.', 'success')
+        return redirect(url_for('inicio_sesion'))
+
+    return render_template('registro_usuarios.html', usuario=current_user())
+
+
+@app.route('/usuarios/login', methods=['GET', 'POST'])
+def inicio_sesion():
+    if request.method == 'POST':
+        correo = request.form['correo'].strip().lower()
+        contrasena = request.form['contrasena']
+
+        usuario = Usuario.query.filter_by(correo=correo).first()
+        if not usuario or not usuario.check_password(contrasena):
+            flash('Correo o contraseña incorrectos.', 'danger')
+            return redirect(url_for('inicio_sesion'))
+
+        session['user_id'] = usuario.id
+        session['user_name'] = usuario.nombre
+        flash(f'Bienvenido, {usuario.nombre}.', 'success')
+        return redirect(url_for('index'))
+
+    return render_template('login.html', usuario=current_user())
+
+
+@app.route('/usuarios/logout')
+def cerrar_sesion():
+    session.pop('user_id', None)
+    session.pop('user_name', None)
+    flash('Sesión cerrada.', 'success')
+    return redirect(url_for('index'))
 
 
 if __name__ == '__main__':
