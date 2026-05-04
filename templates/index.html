@@ -3,14 +3,27 @@
 {% block content %}
 <div class="is-flex is-justify-content-space-between is-align-items-center is-flex-wrap-wrap gap-3 mb-5 fade-up stagger-1">
     <div>
-        <h2 class="title is-4 mb-1"><i class="fa-solid fa-swords mr-2"></i> Biblioteca de juegos</h2>
-        <p class="has-text-grey-lighter">Administra tus títulos, portadas y datos técnicos desde un panel tipo arcade.</p>
+        <h2 class="title is-4 mb-1"><i class="fa-solid fa-swords mr-2"></i> {% if genero_filtro %}{{ genero_filtro }}{% else %}Biblioteca de juegos{% endif %}</h2>
+        <p class="has-text-grey-lighter">{% if genero_filtro %}<a href="{{ url_for('index') }}" style="color: var(--neon-cyan); text-decoration: underline;">Volver a todos</a>{% else %}Venta y renta de títulos disponibles.{% endif %}</p>
     </div>
     <a href="{{ url_for('create_juego') }}" class="button is-brand is-medium">
         <span class="icon"><i class="fa-solid fa-circle-plus"></i></span>
         <span>Nuevo juego</span>
     </a>
 </div>
+
+{% if todos_generos and not genero_filtro %}
+<div class="mb-5 fade-up stagger-1">
+    <h3 class="subtitle is-6 mb-2"><i class="fa-solid fa-filter mr-2"></i> Géneros disponibles:</h3>
+    <div class="tags">
+        {% for gen in todos_generos %}
+        <a href="{{ url_for('por_genero', genero=gen) }}" class="tag is-neon is-medium" style="cursor: pointer; text-decoration: none;">
+            {{ gen }}
+        </a>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
 
 {% if juegos %}
 <div class="columns is-multiline">
