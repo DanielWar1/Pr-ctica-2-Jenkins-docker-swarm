@@ -1,8 +1,7 @@
 version: '3.8'
 services:
   web-videojuegos:
-    # CAMBIO AQUÍ: Ya no usamos latest
-    image: nodensx/jenkins:videojuegos 
+    image: nodensx/jenkins:videojuegos
     ports:
       - "5009:5000"
     environment:
@@ -11,3 +10,7 @@ services:
       - red-videojuegos-nueva
     deploy:
       replicas: 1
+
+networks:
+  red-videojuegos-nueva:
+    driver: overlay
