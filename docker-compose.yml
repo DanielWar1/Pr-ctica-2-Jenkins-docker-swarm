@@ -1,21 +1,19 @@
 version: '3.8'
 
 services:
-  # Definimos el servicio de la aplicación con un nombre claro
-  app-videojuegos:
+  web-videojuegos-final:
     image: nodensx/jenkins:latest
     ports:
       - "5009:5000"
     environment:
       - DATABASE_URL=${DATABASE_URL}
     networks:
-      - red-videojuegos-nueva
+      - red-videojuegos-final
     deploy:
       replicas: 1
       restart_policy:
         condition: on-failure
 
 networks:
-  # Usamos la red que ya tienes creada (confirmada en image_1ea27b.png)
-  red-videojuegos-nueva:
+  red-videojuegos-final:
     external: true
