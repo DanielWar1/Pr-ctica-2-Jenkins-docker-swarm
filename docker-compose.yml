@@ -2,8 +2,7 @@ version: '3.8'
 
 services:
   web-videojuegos-final:
-    # Usamos un tag único para evitar el caché del Worker-1
-    image: nodensx/jenkins:videojuegos-v1
+    image: nodensx/videojuegos:v1 # <--- Nombre totalmente nuevo
     ports:
       - "5009:5000"
     environment:
