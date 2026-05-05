@@ -2,17 +2,16 @@ version: '3.8'
 
 services:
   web-videojuegos-final:
-    image: nodensx/jenkins:latest
+    # Usamos un tag único para evitar el caché del Worker-1
+    image: nodensx/jenkins:videojuegos-v1
     ports:
       - "5009:5000"
     environment:
       - DATABASE_URL=${DATABASE_URL}
     networks:
-      - red-videojuegos-nueva # Debe coincidir con la creada arriba
+      - red-videojuegos-nueva
     deploy:
       replicas: 1
-      restart_policy:
-        condition: on-failure
 
 networks:
   red-videojuegos-nueva:
