@@ -13,4 +13,4 @@ services:
 
 networks:
   red-videojuegos-nueva:
-    external: true
+    driver: overlay
