@@ -1,21 +1,22 @@
 version: '3.8'
 
 services:
-  web:
+  # Cambiamos el nombre del servicio a 'app-videojuegos-final'
+  app-videojuegos-final:
     image: nodensx/jenkins:latest
     ports:
-      - "5009:5000" # Mapeo externo 5009 a interno 5000
-    networks:
-      - red-swarm-practica2
-    deploy:
-      replicas: 2
-      update_config:
-        parallelism: 1
-        delay: 10s
+      - "5002:5000"
     environment:
-      # ACTUALIZADO: Ahora apunta a videojuegos_db
-      - DATABASE_URL=postgresql://postgres:postgres@db-practica2:5432/videojuegos_db
+      - DATABASE_URL=${DATABASE_URL}
+    networks:
+      - red-videojuegos-nueva
+    deploy:
+      replicas: 1
+      # Esto fuerza a que si el contenedor falla, intente iniciar de nuevo
+      restart_policy:
+        condition: on-failure
 
 networks:
-  red-swarm-practica2:
+  # La red que ya creaste manualmente
+  red-videojuegos-nueva:
     external: true
