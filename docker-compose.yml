@@ -1,26 +1,21 @@
-name: Tag on PR Merge
+version: '3.8'
 
-on:
-  pull_request:
-    types: [closed]
-    branches:
-      - 'dev'
+services:
+  web:
+    image: nodensx/jenkins:latest
+    ports:
+      - "5009:5000" # Mapeo externo 5009 a interno 5000
+    networks:
+      - red-swarm-practica2
+    deploy:
+      replicas: 2
+      update_config:
+        parallelism: 1
+        delay: 10s
+    environment:
+      # ACTUALIZADO: Ahora apunta a videojuegos_db
+      - DATABASE_URL=postgresql://postgres:postgres@db-practica2:5432/videojuegos_db
 
-permissions:
-  contents: write
-
-jobs:
-  tag_on_merge:
-    if: github.event.pull_request.merged == true
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Create and push tag
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Este no necesitas crearlo, GitHub lo da solo
-        run: |
-          TAG_NAME="${{ github.event.pull_request.title }}"
-          git tag "$TAG_NAME"
-          git push origin "$TAG_NAME"
+networks:
+  red-swarm-practica2:
+    external: true
