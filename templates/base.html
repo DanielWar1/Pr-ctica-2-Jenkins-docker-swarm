@@ -11,13 +11,14 @@
     <title>{% block title %}{% endblock %}</title>
     <style>
         :root {
-            --matrix-green: #00ff66;
-            --matrix-green-soft: rgba(0, 255, 102, 0.18);
-            --matrix-dark: #030806;
-            --matrix-panel: rgba(6, 18, 10, 0.92);
-            --matrix-panel-soft: rgba(8, 26, 15, 0.9);
-            --text-main: #e9fff0;
-            --text-soft: #9ed7ae;
+            --cyber-cyan: #00d9ff;
+            --cyber-green: #00ff88;
+            --cyber-blend: #00e8cc;
+            --cyber-dark: #020810;
+            --cyber-panel: rgba(2, 12, 20, 0.94);
+            --cyber-panel-soft: rgba(4, 18, 32, 0.92);
+            --text-main: #e0f5ff;
+            --text-soft: #87d4e8;
         }
 
         body {
@@ -25,29 +26,29 @@
             min-height: 100vh;
             color: var(--text-main);
             background:
-                linear-gradient(rgba(0, 255, 102, 0.06) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 255, 102, 0.06) 1px, transparent 1px),
-                radial-gradient(circle at 15% 18%, rgba(0, 255, 102, 0.2), transparent 18%),
-                radial-gradient(circle at 80% 14%, rgba(0, 255, 102, 0.12), transparent 20%),
-                linear-gradient(140deg, #020403 0%, var(--matrix-dark) 40%, #06130a 100%);
+                linear-gradient(rgba(0, 217, 255, 0.08) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 136, 0.05) 1px, transparent 1px),
+                radial-gradient(circle at 15% 18%, rgba(0, 232, 204, 0.22), transparent 18%),
+                radial-gradient(circle at 80% 14%, rgba(0, 217, 255, 0.14), transparent 20%),
+                linear-gradient(140deg, #010509 0%, var(--cyber-dark) 40%, #051018 100%);
             background-size: 34px 34px, 34px 34px, auto, auto, auto;
         }
 
         .page-shell {
             max-width: 1050px;
             margin: 2rem auto;
-            background: linear-gradient(180deg, rgba(6, 18, 10, 0.96), rgba(5, 14, 8, 0.96));
+            background: linear-gradient(180deg, rgba(3, 14, 26, 0.96), rgba(2, 10, 18, 0.96));
             border-radius: 24px;
-            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.52), 0 0 0 1px rgba(0, 255, 102, 0.08);
-            border: 1px solid rgba(0, 255, 102, 0.14);
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.52), 0 0 0 1px rgba(0, 232, 204, 0.1);
+            border: 1px solid rgba(0, 217, 255, 0.16);
             overflow: hidden;
         }
 
         .hero-banner {
             position: relative;
             background:
-                linear-gradient(120deg, rgba(0, 255, 102, 0.12), rgba(0, 255, 102, 0.02)),
-                linear-gradient(120deg, #031009, #07190e);
+                linear-gradient(120deg, rgba(0, 232, 204, 0.14), rgba(0, 217, 255, 0.08)),
+                linear-gradient(120deg, #050d18, #0a1628);
             color: #fff;
             padding: 2rem;
             overflow: hidden;
@@ -76,11 +77,11 @@
             letter-spacing: 0.4px;
             margin-bottom: 0.35rem;
             text-transform: uppercase;
-            text-shadow: 0 0 12px rgba(0, 255, 102, 0.35);
+            text-shadow: 0 0 12px rgba(0, 232, 204, 0.4), 0 0 24px rgba(0, 217, 255, 0.2);
         }
 
         .hero-banner .subtitle {
-            color: rgba(233, 255, 240, 0.86);
+            color: rgba(224, 245, 255, 0.88);
             margin-bottom: 0;
         }
 
@@ -90,15 +91,15 @@
         }
 
         .is-brand {
-            background: linear-gradient(135deg, var(--matrix-green), #91ffb6);
-            color: #041008;
+            background: linear-gradient(135deg, var(--cyber-cyan), var(--cyber-blend));
+            color: #020810;
             border: none;
             font-weight: 700;
-            box-shadow: 0 10px 24px rgba(0, 255, 102, 0.24);
+            box-shadow: 0 10px 24px rgba(0, 232, 204, 0.28);
         }
 
         .is-brand:hover {
-            color: #041008;
+            color: #020810;
             filter: brightness(1.05);
         }
 
@@ -108,9 +109,9 @@
         .input,
         .textarea,
         .select select {
-            background-color: var(--matrix-panel-soft);
+            background-color: var(--cyber-panel-soft);
             color: var(--text-main);
-            border-color: rgba(0, 255, 102, 0.12);
+            border-color: rgba(0, 217, 255, 0.14);
         }
 
         .label,
@@ -129,33 +130,33 @@
         }
 
         .box {
-            border: 1px solid rgba(0, 255, 102, 0.1);
+            border: 1px solid rgba(0, 232, 204, 0.12);
             box-shadow: 0 14px 32px rgba(0, 0, 0, 0.24);
         }
 
         .game-card,
         .poster-frame {
-            background: linear-gradient(180deg, rgba(8, 28, 14, 0.98), rgba(4, 14, 8, 0.98));
-            border: 1px solid rgba(0, 255, 102, 0.12);
+            background: linear-gradient(180deg, rgba(4, 18, 32, 0.98), rgba(2, 10, 18, 0.98));
+            border: 1px solid rgba(0, 217, 255, 0.14);
             box-shadow: 0 14px 32px rgba(0, 0, 0, 0.28);
         }
 
         .tag.is-neon {
-            background: rgba(0, 255, 102, 0.14);
-            color: var(--matrix-green);
-            border: 1px solid rgba(0, 255, 102, 0.22);
+            background: rgba(0, 232, 204, 0.16);
+            color: var(--cyber-cyan);
+            border: 1px solid rgba(0, 232, 204, 0.24);
         }
 
         .tag.is-neon-green {
-            background: rgba(0, 255, 102, 0.1);
-            color: #92ffb9;
-            border: 1px solid rgba(0, 255, 102, 0.18);
+            background: rgba(0, 217, 255, 0.12);
+            color: #00ffc2;
+            border: 1px solid rgba(0, 217, 255, 0.2);
         }
 
         .tag.is-violet {
-            background: rgba(0, 255, 102, 0.08);
-            color: #caffdc;
-            border: 1px solid rgba(0, 255, 102, 0.16);
+            background: rgba(0, 232, 204, 0.1);
+            color: #90e8ff;
+            border: 1px solid rgba(0, 232, 204, 0.18);
         }
 
         .flash-stack {
@@ -163,8 +164,8 @@
         }
 
         .flash-box {
-            border: 1px solid rgba(0, 255, 102, 0.18);
-            background: rgba(2, 14, 7, 0.95);
+            border: 1px solid rgba(0, 232, 204, 0.2);
+            background: rgba(2, 10, 14, 0.96);
             color: var(--text-main);
             box-shadow: 0 10px 24px rgba(0, 0, 0, 0.2);
         }
@@ -184,19 +185,19 @@
         }
 
         .matrix-chip {
-            border: 1px solid rgba(0, 255, 102, 0.16);
-            background: rgba(0, 255, 102, 0.08);
+            border: 1px solid rgba(0, 232, 204, 0.18);
+            background: rgba(0, 217, 255, 0.1);
             border-radius: 999px;
             padding: 0.55rem 0.8rem;
         }
 
         .matrix-chip:hover {
-            background: rgba(0, 255, 102, 0.14);
+            background: rgba(0, 232, 204, 0.16);
         }
 
         .matrix-chip.is-active {
-            background: rgba(0, 255, 102, 0.22);
-            box-shadow: 0 0 0 1px rgba(0, 255, 102, 0.22) inset;
+            background: rgba(0, 232, 204, 0.26);
+            box-shadow: 0 0 0 1px rgba(0, 232, 204, 0.26) inset;
         }
 
         .fade-up {
