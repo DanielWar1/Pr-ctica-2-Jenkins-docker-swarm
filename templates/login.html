@@ -1,35 +1,86 @@
 {% extends 'base.html' %}
-{% block title %}Inicio de Sesión{% endblock %}
+{% block title %}Inicio de Sesion{% endblock %}
 {% block content %}
+<style>
+    .login-shell {
+        position: relative;
+        overflow: hidden;
+        border-radius: 20px;
+        padding: 1.25rem;
+        background: linear-gradient(150deg, rgba(2, 20, 36, 0.92), rgba(4, 12, 20, 0.96));
+        border: 1px solid rgba(0, 217, 255, 0.2);
+    }
+
+    .login-shell::before {
+        content: '';
+        position: absolute;
+        inset: -80px auto auto -80px;
+        width: 220px;
+        height: 220px;
+        background: radial-gradient(circle, rgba(0, 232, 204, 0.22), transparent 65%);
+        pointer-events: none;
+    }
+
+    .login-shell::after {
+        content: '';
+        position: absolute;
+        inset: auto -70px -90px auto;
+        width: 220px;
+        height: 220px;
+        background: radial-gradient(circle, rgba(0, 217, 255, 0.2), transparent 65%);
+        pointer-events: none;
+    }
+
+    .login-shell .field,
+    .login-shell .buttons,
+    .login-shell .title,
+    .login-shell p {
+        position: relative;
+        z-index: 1;
+    }
+
+    .login-shell .input {
+        border-width: 1px;
+        border-color: rgba(0, 217, 255, 0.24);
+    }
+
+    .login-shell .input:focus {
+        border-color: rgba(0, 232, 204, 0.9);
+        box-shadow: 0 0 0 0.125em rgba(0, 232, 204, 0.15);
+    }
+</style>
+
 <div class="columns is-centered">
     <div class="column is-8-tablet is-5-desktop fade-up stagger-2">
-        <div class="box">
-            <h3 class="title is-4 mb-2"><i class="fa-solid fa-right-to-bracket mr-2"></i> Inicio de sesión</h3>
-            <p class="has-text-grey-lighter mb-5">Ingresa con tu correo y contraseña para entrar al sistema.</p>
+        <div class="box login-shell">
+            <h3 class="title is-4 mb-2"><i class="fa-solid fa-right-to-bracket mr-2"></i> Inicio de sesion</h3>
+            <p class="has-text-grey-lighter mb-5">Ingresa con tu correo y contrasena para entrar al sistema.</p>
             <form action="{{ url_for('inicio_sesion') }}" method="POST">
                 <div class="field">
                     <label class="label" for="correo">Correo</label>
-                    <div class="control">
-                        <input class="input" type="email" id="correo" name="correo" required>
+                    <div class="control has-icons-left">
+                        <input class="input" type="email" id="correo" name="correo" placeholder="usuario@correo.com" required>
+                        <span class="icon is-small is-left"><i class="fa-solid fa-envelope"></i></span>
                     </div>
                 </div>
 
                 <div class="field">
-                    <label class="label" for="contrasena">Contraseña</label>
-                    <div class="control">
-                        <input class="input" type="password" id="contrasena" name="contrasena" required>
+                    <label class="label" for="contrasena">Contrasena</label>
+                    <div class="control has-icons-left">
+                        <input class="input" type="password" id="contrasena" name="contrasena" placeholder="Tu contrasena" required>
+                        <span class="icon is-small is-left"><i class="fa-solid fa-lock"></i></span>
                     </div>
                 </div>
 
                 <div class="buttons mt-5">
-                    <button type="submit" class="button is-brand">
+                    <button type="submit" class="button is-brand is-fullwidth">
                         <span class="icon"><i class="fa-solid fa-unlock-keyhole"></i></span>
                         <span>Entrar</span>
                     </button>
-                    <a href="{{ url_for('registro_usuarios') }}" class="button is-light">
-                        <span class="icon"><i class="fa-solid fa-user-plus"></i></span>
-                        <span>Crear cuenta</span>
-                    </a>
+                </div>
+
+                <div class="has-text-centered mt-4">
+                    <a href="{{ url_for('registro_usuarios') }}" class="has-text-grey-lighter" style="text-decoration: underline;">Aun no tienes cuenta? Crear cuenta</a>
                 </div>
             </form>
         </div>

@@ -3,6 +3,7 @@ import uuid
 from flask import Flask, request, render_template, redirect, url_for, session, flash
 from flask_sqlalchemy import SQLAlchemy
 from dotenv import load_dotenv
+from datetime import datetime
 from werkzeug.utils import secure_filename
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -99,7 +100,12 @@ with app.app_context():
 
 #Ruta raiz
 @app.route('/')
-def index():
+def home():
+    ahora = datetime.now()
+    return render_template('home.html', usuario=current_user(), ahora=ahora)
+
+@app.route('/catalogo')
+def catalogo():
     juegos = Juego.query.all()
     generos = sorted(set(j.genero for j in juegos if j.genero), key=str.lower)
     return render_template('index.html', juegos=juegos, todos_generos=generos, genero_filtro=None, usuario=current_user())
@@ -120,7 +126,7 @@ def create_juego():
         db.session.add(nuevo_juego)
         db.session.commit()
 
-        return redirect(url_for('index'))
+        return redirect(url_for('catalogo'))
     
     #Aqui sigue si es GET
     return render_template('create_juegos.html', usuario=current_user())
@@ -134,14 +140,14 @@ def delete_juego(no_serie):
         eliminar_imagen(juego.imagen)
         db.session.delete(juego)
         db.session.commit()
-    return redirect(url_for('index'))
+    return redirect(url_for('catalogo'))
 
 #Actualizar juego
 @app.route('/juegos/update/<string:no_serie>', methods=['GET','POST'])
 def update_juego(no_serie):
     juego = Juego.query.get(no_serie)
     if not juego:
-        return redirect(url_for('index'))
+        return redirect(url_for('catalogo'))
 
     if request.method == 'POST':
         juego.nombre = request.form['nombre']
@@ -155,7 +161,7 @@ def update_juego(no_serie):
             juego.imagen = nueva_imagen
 
         db.session.commit()
-        return redirect(url_for('index'))
+        return redirect(url_for('catalogo'))
     return render_template('update_juegos.html', juego=juego, usuario=current_user())
 
 #Ruta /juegos
@@ -208,7 +214,7 @@ def inicio_sesion():
         session['user_id'] = usuario.id
         session['user_name'] = usuario.nombre
         flash(f'Bienvenido, {usuario.nombre}.', 'success')
-        return redirect(url_for('index'))
+        return redirect(url_for('catalogo'))
 
     return render_template('login.html', usuario=current_user())
 
@@ -218,7 +224,7 @@ def cerrar_sesion():
     session.pop('user_id', None)
     session.pop('user_name', None)
     flash('Sesión cerrada.', 'success')
-    return redirect(url_for('index'))
+    return redirect(url_for('catalogo'))
 
 
 if __name__ == '__main__':
