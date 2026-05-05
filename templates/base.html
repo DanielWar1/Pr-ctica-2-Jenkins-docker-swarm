@@ -247,10 +247,11 @@
                 <div class="is-flex is-justify-content-space-between is-align-items-start is-flex-wrap-wrap gap-3">
                     <div>
                         <h1 class="title is-2"><i class="fa-solid fa-gamepad mr-2"></i> Catálogo de Videojuegos</h1>
-                        <p class="subtitle is-5"><i class="fa-solid fa-bolt mr-2"></i> Venta y renta de juegos</p>
+                        <p class="subtitle is-5"><i class="fa-solid fa-bolt mr-2"></i> Biblioteca interactiva de videojuegos</p>
                     </div>
                     <nav class="matrix-nav">
-                        <a class="matrix-chip" href="{{ url_for('index') }}">Juegos</a>
+                        <a class="matrix-chip" href="{{ url_for('home') }}">Inicio</a>
+                        <a class="matrix-chip" href="{{ url_for('catalogo') }}">Catálogo</a>
                         <a class="matrix-chip" href="{{ url_for('registro_usuarios') }}">Registro</a>
                         <a class="matrix-chip" href="{{ url_for('inicio_sesion') }}">Login</a>
                         {% if usuario %}
@@ -279,3 +280,5 @@
     </section>
 </body>
 </html>
+
+

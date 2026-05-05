@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block title %}Inicio{% endblock %}
+{% block content %}
+<div class="columns is-centered">
+    <div class="column is-10-desktop fade-up stagger-1">
+        <div class="box" style="overflow:hidden; position:relative;">
+            <div class="columns is-vcentered is-variable is-8">
+                <div class="column is-7">
+                    <p class="tag is-neon is-medium mb-4">Bienvenido al sistema</p>
+                    <h2 class="title is-3 mb-3">Catálogo de videojuegos con registro, imágenes y filtrado por género</h2>
+                    <p class="content has-text-grey-lighter mb-4">
+                        Esta página te permite administrar videojuegos, guardar sus portadas, organizar la colección por géneros
+                        y acceder con usuario y contraseña para mantener el control del catálogo.
+                    </p>
+                    <div class="buttons">
+                        <a href="{{ url_for('catalogo') }}" class="button is-brand is-medium">
+                            <span class="icon"><i class="fa-solid fa-arrow-right"></i></span>
+                            <span>Entrar al catálogo</span>
+                        </a>
+                        <a href="{{ url_for('registro_usuarios') }}" class="button is-light is-medium">
+                            <span class="icon"><i class="fa-solid fa-user-plus"></i></span>
+                            <span>Crear cuenta</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="column is-5">
+                    <div class="poster-frame p-5 has-text-centered" style="border-radius: 20px;">
+                        <p class="subtitle is-6 mb-2">Fecha y hora actual</p>
+                        <p class="title is-4 mb-2">{{ ahora.strftime('%d/%m/%Y') }}</p>
+                        <p class="title is-5 has-text-weight-semibold">{{ ahora.strftime('%H:%M:%S') }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

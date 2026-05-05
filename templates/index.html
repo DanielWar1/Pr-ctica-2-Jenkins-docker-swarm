@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
-{% block title %}Lista de Videojuegos {% endblock %}
+{% block title %}Catálogo de Videojuegos{% endblock %}
 {% block content %}
 <div class="is-flex is-justify-content-space-between is-align-items-center is-flex-wrap-wrap gap-3 mb-5 fade-up stagger-1">
     <div>
         <h2 class="title is-4 mb-1"><i class="fa-solid fa-swords mr-2"></i> {% if genero_filtro %}{{ genero_filtro }}{% else %}Biblioteca de juegos{% endif %}</h2>
-        <p class="has-text-grey-lighter">{% if genero_filtro %}<a href="{{ url_for('index') }}" style="color: var(--matrix-green); text-decoration: underline;">Volver a todos</a>{% else %}Venta y renta de títulos disponibles.{% endif %}</p>
+        <p class="has-text-grey-lighter">{% if genero_filtro %}<a href="{{ url_for('catalogo') }}" style="color: var(--cyber-cyan); text-decoration: underline;">Volver a todos</a>{% else %}Explora el catálogo de videojuegos disponibles.{% endif %}</p>
     </div>
     <a href="{{ url_for('create_juego') }}" class="button is-brand is-medium">
         <span class="icon"><i class="fa-solid fa-circle-plus"></i></span>
@@ -95,3 +95,5 @@
 </div>
 {% endif %}
 {% endblock %}
+
+
