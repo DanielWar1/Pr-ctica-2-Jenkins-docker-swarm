@@ -1,8 +1,7 @@
 version: '3.8'
-
 services:
-  web-videojuegos-final:
-    image: nodensx/videojuegos:v1 # <--- Nombre totalmente nuevo
+  web-videojuegos:
+    image: nodensx/videojuegos-app:latest
     ports:
       - "5009:5000"
     environment:
@@ -11,7 +10,6 @@ services:
       - red-videojuegos-nueva
     deploy:
       replicas: 1
-
 networks:
   red-videojuegos-nueva:
     external: true
