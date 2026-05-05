@@ -1,7 +1,8 @@
 version: '3.8'
+
 services:
   web-videojuegos:
-     image: nodensx/jenkins:latest
+    image: nodensx/jenkins:latest
     ports:
       - "5009:5000"
     environment:
@@ -10,6 +11,10 @@ services:
       - red-videojuegos-nueva
     deploy:
       replicas: 1
+      placement:
+        constraints:
+          - node.role == worker
+
 networks:
   red-videojuegos-nueva:
     external: true
