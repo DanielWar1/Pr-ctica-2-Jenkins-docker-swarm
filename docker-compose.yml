@@ -1,8 +1,8 @@
 version: '3.8'
 
 services:
-  # Cambiamos el nombre del servicio a 'app-videojuegos-final'
-  app-videojuegos-final:
+  # Definimos el servicio de la aplicación con un nombre claro
+  app-videojuegos:
     image: nodensx/jenkins:latest
     ports:
       - "5002:5000"
@@ -12,11 +12,10 @@ services:
       - red-videojuegos-nueva
     deploy:
       replicas: 1
-      # Esto fuerza a que si el contenedor falla, intente iniciar de nuevo
       restart_policy:
         condition: on-failure
 
 networks:
-  # La red que ya creaste manualmente
+  # Usamos la red que ya tienes creada (confirmada en image_1ea27b.png)
   red-videojuegos-nueva:
     external: true
