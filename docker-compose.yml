@@ -5,11 +5,19 @@ services:
     ports:
       - "5000:5000"
     environment:
-      - DATABASE_URL=postgresql://postgres:postgres@stack-videojuegos_db-videojuegos-nueva:5432/videojuegos_db
+      # AQUÍ ESTÁ EL CAMBIO: El host debe ser 'db-videojuegos-nueva' sin prefijos
+      - DATABASE_URL=postgresql://postgres:postgres@db-videojuegos-nueva:5432/videojuegos_db
     networks:
       - red-videojuegos-nueva
-    deploy:
-      replicas: 1
+
+  db-videojuegos-nueva:  # Este nombre debe ser el mismo que usas arriba
+    image: postgres:latest
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=videojuegos_db
+    networks:
+      - red-videojuegos-nueva
 
 networks:
   red-videojuegos-nueva:
