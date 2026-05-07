@@ -1,11 +1,11 @@
 version: '3.8'
 services:
   web-videojuegos:
-    image: nodensx/jenkins:videojuegos
+    image: nodensx/pr-ctica-2-jenkins-docker-swarm:latest
     ports:
-      - "5009:5000"
+      - "5000:5000"
     environment:
-      - DATABASE_URL=postgresql://postgres:postgres@db-videojuegos-nueva:5432/videojuegos_db
+      - DATABASE_URL=postgresql://postgres:postgres@stack-videojuegos_db-videojuegos-nueva:5432/videojuegos_db
     networks:
       - red-videojuegos-nueva
     deploy:
