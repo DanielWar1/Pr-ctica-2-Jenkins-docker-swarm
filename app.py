@@ -7,14 +7,11 @@ from datetime import datetime
 from werkzeug.utils import secure_filename
 from werkzeug.security import generate_password_hash, check_password_hash
 
-
 load_dotenv()
 
-
-#crear instancia
-app =  Flask(__name__)
+# crear instancia
+app = Flask(__name__)
 app.secret_key = os.getenv('SECRET_KEY', 'matrix-secret-key')
-
 
 database_url = os.getenv('DATABASE_URL')
 if database_url and database_url.startswith('postgres://'):
@@ -28,7 +25,7 @@ os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
 db = SQLAlchemy(app)
 
-#Modelo de la base de datos
+# Modelo de la base de datos
 class Juego(db.Model):
     __tablename__ = 'juegos'
     no_serie = db.Column(db.String, primary_key=True)
@@ -39,7 +36,7 @@ class Juego(db.Model):
     imagen = db.Column(db.String)
 
     def to_dict(self):
-        return{
+        return {
             'no_serie': self.no_serie,
             'nombre': self.nombre,
             'genero': self.genero,
@@ -47,7 +44,6 @@ class Juego(db.Model):
             'anio_salida': self.anio_salida,
             'imagen': self.imagen,
         }
-
 
 class Usuario(db.Model):
     __tablename__ = 'usuarios'
@@ -63,7 +59,6 @@ class Usuario(db.Model):
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
 
-
 def guardar_imagen(archivo_imagen):
     if not archivo_imagen or not archivo_imagen.filename:
         return None
@@ -77,7 +72,6 @@ def guardar_imagen(archivo_imagen):
     archivo_imagen.save(ruta_destino)
     return nombre_unico
 
-
 def eliminar_imagen(nombre_archivo):
     if not nombre_archivo:
         return
@@ -86,19 +80,16 @@ def eliminar_imagen(nombre_archivo):
     if os.path.exists(ruta_archivo):
         os.remove(ruta_archivo)
 
-
 def current_user():
     user_id = session.get('user_id')
     if not user_id:
         return None
     return Usuario.query.get(user_id)
 
-
 with app.app_context():
     db.create_all()
 
-
-#Ruta raiz
+# Ruta raiz
 @app.route('/')
 def home():
     ahora = datetime.now()
@@ -110,7 +101,7 @@ def catalogo():
     generos = sorted(set(j.genero for j in juegos if j.genero), key=str.lower)
     return render_template('index.html', juegos=juegos, todos_generos=generos, genero_filtro=None, usuario=current_user())
 
-#Ruta /juegos crear un nuevo juego
+# Ruta /juegos crear un nuevo juego
 @app.route('/juegos/new', methods=['GET','POST'])
 def create_juego():
     if request.method == 'POST':
@@ -128,11 +119,9 @@ def create_juego():
 
         return redirect(url_for('catalogo'))
     
-    #Aqui sigue si es GET
     return render_template('create_juegos.html', usuario=current_user())
 
-
-#Eliminar juego
+# Eliminar juego
 @app.route('/juegos/delete/<string:no_serie>')
 def delete_juego(no_serie):
     juego = Juego.query.get(no_serie)
@@ -142,7 +131,7 @@ def delete_juego(no_serie):
         db.session.commit()
     return redirect(url_for('catalogo'))
 
-#Actualizar juego
+# Actualizar juego
 @app.route('/juegos/update/<string:no_serie>', methods=['GET','POST'])
 def update_juego(no_serie):
     juego = Juego.query.get(no_serie)
@@ -164,18 +153,17 @@ def update_juego(no_serie):
         return redirect(url_for('catalogo'))
     return render_template('update_juegos.html', juego=juego, usuario=current_user())
 
-#Ruta /juegos
+# Ruta /juegos
 @app.route('/juegos')
 def getJuegos():
     return 'Aqui van los juegos'
 
-#Ruta para filtrar por género
+# Ruta para filtrar por género
 @app.route('/genero/<string:genero>')
 def por_genero(genero):
     juegos = Juego.query.filter_by(genero=genero).all()
     generos = sorted(set(j.genero for j in Juego.query.all() if j.genero), key=str.lower)
     return render_template('index.html', juegos=juegos, genero_filtro=genero, todos_generos=generos, usuario=current_user())
-
 
 @app.route('/usuarios/registro', methods=['GET', 'POST'])
 def registro_usuarios():
@@ -199,7 +187,6 @@ def registro_usuarios():
 
     return render_template('registro_usuarios.html', usuario=current_user())
 
-
 @app.route('/usuarios/login', methods=['GET', 'POST'])
 def inicio_sesion():
     if request.method == 'POST':
@@ -218,7 +205,6 @@ def inicio_sesion():
 
     return render_template('login.html', usuario=current_user())
 
-
 @app.route('/usuarios/logout')
 def cerrar_sesion():
     session.pop('user_id', None)
@@ -226,6 +212,7 @@ def cerrar_sesion():
     flash('Sesión cerrada.', 'success')
     return redirect(url_for('catalogo'))
 
-
+# MODIFICACIÓN FINAL PARA PRODUCCIÓN/DOCKER
 if __name__ == '__main__':
-    app.run(debug=True)
+    # Usamos host='0.0.0.0' para que sea accesible desde fuera del contenedor
+    app.run(host='0.0.0.0', port=5000, debug=True)
